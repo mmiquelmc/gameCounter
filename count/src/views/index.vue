@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="flex h-screen w-full">
+  <div class="h-screen">
+    <div class="flex w-full mb-5">
       <AddTeam />
     </div>
     <TeamList :class="isTeams"/>

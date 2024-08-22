@@ -1,23 +1,40 @@
-import { createPinia, defineStore } from 'pinia';
+import { createPinia, defineStore } from "pinia";
 
 const pinia = createPinia();
 
-export const useTeamStore = defineStore('team', {
+export const useTeamStore = defineStore("team", {
   state: () => ({
     teams: [],
-    players: [],
     onMatch: false,
     matchTeams: [],
-
+    colours: [
+      "red",
+      "blue",
+      "green",
+      "yellow",
+      "purple",
+      "orange",
+      "pink",
+      "brown",
+      "black",
+      "white",
+    ],
+    abailableColours: [],
+    usedColours: [],
   }),
   actions: {
-
     //setters
     addTeam(name) {
-      this.teams.push({ id: Date.now(), name });
+      console.log(this.teams);
+      if (this.teams.find((team) => team.name === name)) {
+        alert("Team already exists");
+        return;
+      }
+      this.teams.push({ id: Date.now(), name, players: [] });
     },
-    setPlayer(name, team) {
-      this.players.push({ id: Date.now(), name, team });
+    setPlayer(name, teamId) {
+      let player = { id: Date.now(), name, teamId };
+      this.teams.find((t) => t.id === teamId).players.push(player);
     },
     setMatchTeams(team1, team2) {
       this.matchTeams = [team1, team2];
@@ -39,7 +56,17 @@ export const useTeamStore = defineStore('team', {
     get getOnMatch() {
       return this.onMatch;
     },
-  }
+
+    //deleters
+    deleteTeam(id) {
+      this.teams = this.teams.filter((team) => team.id !== id);
+    },
+    deletePlayer(playerId, teamId) {
+      console.log("deleting player");
+      let team = this.teams.find((t) => t.id === teamId);
+      team.players = team.players.filter((player) => player.id !== playerId);
+    },
+  },
 });
 
 export default pinia;
