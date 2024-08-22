@@ -19,29 +19,12 @@
   export default defineComponent({
     data() {
       return {
-        newPlayerName: '',
-        selectedTeam: ''
+        store: useTeamStore(),
       };
     },
     computed: {
-      teams() {
-        const store = useTeamStore();
-        return store.teams;
-      },
-      players() {
-        const store = useTeamStore();
-        return store.players;
-      }
     },
     methods: {
-      setPlayer() {
-        if (this.newPlayerName && this.selectedTeam) {
-          const store = useTeamStore();
-          store.setPlayer(this.newPlayerName, this.selectedTeam);
-          this.newPlayerName = '';
-          this.selectedTeam = '';
-        }
-      }
     }
   });
   </script>
